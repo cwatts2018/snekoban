@@ -1,12 +1,5 @@
-"""
-6.1010 Spring '23 Lab 4: Snekoban Game
-"""
-
 import json
 import typing
-
-# NO ADDITIONAL IMPORTS!
-
 
 direction_vector = {
     "up": (-1, 0),
@@ -185,12 +178,15 @@ def solve_puzzle(game):
     #list of tuples of computer pos, and position tuples (paths)
     #ex: [ ( "up", "down", "left") ,
         #  ( "left", "right" ) ]
+    
     visited = { (tuple(game["computers"]), game["player"]), } 
     #set of tuples of computer pos and visted positions
     #ex: { ( { (1,1), (1,2) },  computer positions
     #          (3,2) ), } player postion
+    
     game_states = [game]
     #list of dictionary game states associated with each path in agenda
+    
     if victory_check(game):
         return []
 
@@ -215,14 +211,6 @@ def solve_puzzle(game):
             return list(path) + ["left"]
       
     return None
-        
-    #get row and col of player, check all four directions if player can move
-    #there - if so, add new_pos to agenda and edit computer pos in new_pos
-    # (create four new tuples w for loops)
-    
-    #remove first path, add all four children directions to the end if
-    #not in visited and all four directions don't satisfy victory_check,
-    #repeat with next first path in agenda
     
 def check_child(game, agenda, visited, path, game_states, direction):
     """
@@ -242,7 +230,8 @@ def check_child(game, agenda, visited, path, game_states, direction):
     return False
 
 if __name__ == "__main__":
-    old = [
+    #example usage
+    g = [
    [["wall"], ["wall"], ["wall"], ["wall"],     ["wall"],   ["wall"]],
    [["wall"], [],       [],       ["target"],   ["wall"],   ["wall"]],
    [["wall"], [],       [],       ["wall"],     ["player"], ["wall"]],
@@ -250,15 +239,13 @@ if __name__ == "__main__":
    [["wall"], [],       [],       [],           ["wall"],   ["wall"]],
    [["wall"], ["wall"], ["wall"], ["wall"],     ["wall"],   ["wall"]]
 ]
-    new = new_game(old)
+    new = new_game(g)
     print(new)
-    print()
-    # print
    
-    # new2 = step_game(new, "up")
-    # print(new2)
-    # new3 = step_game(new2, "left")
-    # print(new3)
+    new2 = step_game(new, "up")
+    print(new2)
+    new3 = step_game(new2, "left")
+    print(new3)
     solution = solve_puzzle(new)
     print(solution)
     # old_board_back = dump_game(new)
